@@ -1,0 +1,13 @@
+<scroll-view style="width: 100%; height: 100%">
+
+    <view style="height: 50rpx"></view>
+    
+    <view class="input_instruction_wrapper">
+        <view class="input_instruction">请复制分享链接</view>
+    </view>
+    
+    <view class="input_wrapper">
+        <textarea class="url_text" auto-height value="{{url}}"></textarea>
+    </view>
+    <button class="copyBtn" wx:if="{{canIUseClipboard}}" bindtap="copyCode">复制链接</button>
+</scroll-view>

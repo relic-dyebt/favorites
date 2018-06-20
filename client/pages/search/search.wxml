@@ -1,0 +1,49 @@
+<!-- 搜索 -->
+<view class="search">
+    <!-- 搜索框-->
+    <view class="search-bar">
+        <view class="search-wrap">
+            <view class="search-box">
+                <icon class="icon-search" type="search" size="18"></icon>
+                <input type="text" class="search-input" placeholder="搜索文章标题或标签" value="{{setSearchKeyword}}" focus="{{inputFocus}}" bindinput="onSearchInput" bindfocus="onSearchFocus" bindconfirm="onSearchConfirm" />
+                <view class="icon-clear" hidden="{{searchKeyword.length<1}}">
+                    <icon type="clear" size="20" catchtap="onClearInput"></icon>
+                </view>
+            </view>
+        </view>
+        <view class="cancel-btn" bindtap="onSearchCancel" hidden="{{!searchCancelShow}}">取消</view>
+    </view>
+  
+    <!-- 搜索结果 -->
+    <view class="search-result" wx:if="{{searchResultShow&&!searchTagShow}}" >
+        <scroll-view class="articles_scroll_view" scroll-y="true" bindscroll="onArticlesScroll" bindscrolltoupper="onArticlesScrollToUpper" bindscrolltolower="onArticlesScrollToLower">
+    
+            <view class="articles_empty_view" wx:if="{{searchResultList.length==0}}">
+                <image class="empty_image" src="/image/empty.png" mode="widthFix"></image>
+                <text class="empty_text">没有相关结果</text>
+            </view>
+    
+            <view class="article" wx:for="{{searchResultList}}">
+                <view class="article_main">
+                    <view class="article_info" bindtap="onArticleTap" data-link_id="{{item.link_id}}">
+                        <view class="article_title">
+                            {{item.title}}
+                        </view>
+                        <view class="article_abstract">
+                            {{item.abstract}}
+                        </view>
+                    </view>
+                    <view class="article_image_wrapper" wx:if="{{item.image!=null}}">
+                        <image class="article_image" mode="aspectFill" src="{{item.image}}"></image>
+                    </view>
+                </view>
+                <view class="article_tags" wx:if="{{item.tagList!=null}}">
+                    <view class="article_tag" wx:for="{{item.tagList}}">
+                        {{item.name}}
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+
+</view>

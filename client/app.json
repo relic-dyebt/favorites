@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/door/door",
+    "pages/tag/tag",
+    "pages/add/add",
+    "pages/article/article",
+    "pages/search/search",
+    "pages/share/share",
+    "pages/abstract/abstract"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "cool favorites",
+    "navigationBarTextStyle": "black"
+  }
+}

@@ -1,0 +1,28 @@
+<scroll-view class="all" scroll-y="true">
+
+    <view style="height: 50rpx"></view>
+    
+    <view class="input_wrapper">
+        <textarea placeholder="输入页面URL..." auto-height bindinput="onUrlInput"></textarea>
+    </view>
+    
+    <view class="input_instruction_wrapper">
+        <view class="input_instruction">选择分类</view>
+    </view>
+    
+    <scroll-view class="category_selection_scroll" scroll-y="true">
+        <view class="category_container" wx:if="{{categoryList!=null && categoryList.length>0}}">
+            <view class="category_wrapper" wx:for="{{categoryList}}" data-category_id="{{item.category_id}}" data-count="{{item.count}}" bindtap="onCategoryTap">
+                <view class="{{item.category_id==selectedCategory?'category_selected':'category'}}">
+                    {{item.name}}
+                </view>
+            </view>
+        </view>
+        <view class="empty_view" wx:if="{{categoryList==null || categoryList.length == 0}}">还没有创建分类</view>
+    </scroll-view>
+    
+    <view class="button_wrapper">
+        <view class="button" bindtap="onConfirm">确认添加</view>
+    </view>
+
+</scroll-view>

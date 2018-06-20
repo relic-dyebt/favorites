@@ -1,0 +1,106 @@
+<!--导航-->
+<view class='navbar'>
+  <text class="item {{currentTab==index ? 'active' : ''}}" wx:for="{{navbar}}" wx:key="{{index}}" data-index="{{index}}" bindtap="onNavbarTap">{{item}}</text>
+</view>
+
+<!--分类-->
+<view class='category-container' hidden='{{currentTab!=0}}'>
+  <scroll-view style='height: 100%; width: 100%' scroll-y="true">
+    <view class='category-wrapper'>
+      <view class='category' wx:for='{{categoryList}}' wx:key='id'>
+        <swiper class="category-swiper {{item.id == currentCategory? 'current': 'none'}}" current='{{currentSwiperCategory}}'>
+          <swiper-item style="width: 100%;">
+            <view class='category-inner' bindtap='onCategoryTap' data-index='{{index}}' data-id='{{item.category_id}}' data-name='{{item.name}}'>
+              <view class="category-dot-box">
+                <view class="category-dot" style="background-color: {{item.color}}"/></view>
+              <text class="category-title">{{item.name}}</text>
+              <text class="category-count">{{item.count}}篇文章</text>
+            </view>
+          </swiper-item>
+          <swiper-item>
+            <view class='category-delete' bindtap='onCategoryDeleteTap' data-category_id='{{item.category_id}}'>
+              <text>删除</text>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+  </scroll-view>
+  <view class='category-add'>
+    <input class='category-input' placeholder='添加新分类...' maxlength='5' bindconfirm='onCreateCategory'></input>
+  </view>
+</view>
+
+
+<!--文章-->
+<view class='article-container' hidden='{{currentTab != 1}}'>
+  <scroll-view scroll-y='true' style="height: 100%;" bindscroll="onArticlesScroll" bindscrolltoupper="onArticlesScrollToUpper"
+    bindscrolltolower="onArticlesScrollToLower">
+    <view class='article-header'>
+      <view class="category-dot-box">
+        <view class="category-dot" style="background-color: {{currentCategoryColor}}">
+        </view>
+      </view>
+      <text class='article-category-title'>{{currentCategoryTitle}}</text>
+    </view>
+
+    <view class="article-empty-view" wx:if="{{articleList.length==0}}">
+      <image class="empty-image" src="/images/empty.png" mode="widthFix"></image>
+      <text class="empty-text">该分类还没有收藏</text>
+    </view>
+    <view class='article' wx:for="{{articleList}}" wx:key="id">
+      <view class='article-main'>
+        <swiper class='article-swiper' bindchange='onBindChange' current='{{currentSwiper}}'>
+          <swiper-item class='article-swiper-item-top' bindtap="onArticleTap" data-link_id='{{item.link_id}}' data-title='{{item.title}}' data-index='{{index}}'>
+            <view class="article-info">
+              <view class="article-title">
+                {{item.title}}
+              </view>
+              <view class='article-abstract'>
+                {{item.abstract}}
+              </view>
+            </view>
+            <view class='article-image-wrapper' wx:if="{{item.image!=null}}">
+              <image class='article-image' mode="aspectFill" src="{{item.image}}"></image>
+            </view>
+          </swiper-item>
+
+          <swiper-item class='article-swiper-bottom'>
+            <view class='article-share' wx:if="{{item.shareCount!=null}}">
+              分享已被阅读{{item.shareCount}}次
+            </view>
+            <view class='article-options' style="height:{{item.share!=null? '80%': '100%'}}">
+              <view class='article-icon-box' data-link_id="{{item.link_id}}" data-abstract="{{item.abstract}}" bindtap="onArticleAbstract">
+                <image src='/images/categorize.png' style='width: 80rpx; height: 80rpx'></image>
+              </view>
+              <view class='article-icon-box' data-link_id="{{item.link_id}}" bindtap="onArticleEditTag">
+                <image src='/images/tag.png' style='width: 80rpx; height: 80rpx'></image>
+              </view>
+              <view class='article-icon-box' data-link_id="{{item.link_id}}" data-url="{{item.url}}" bindtap="onArticleShare">
+                <image src='/images/share.png' style='width: 80rpx; height: 80rpx'></image>
+              </view>
+              <view class='article-icon-box' data-link_id="{{item.link_id}}" data-category_id="{{item.category_id}}" bindtap="onArticleDelete">
+                <image src='/images/delete.png' style='width: 80rpx; height: 80rpx'></image>
+              </view>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+      
+      <view class='article-tag-container' wx:if="{{item.tagList.length!=0}}">
+        <view class='article-tag' wx:for="{{item.tagList}}" wx:key="item">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class='floating-buttons-container' wx:if="{{showFloatingButtons}}" animation="{{floatingButtonsAnimation}}">
+    <view class='floating-button-add' bindtap='onAddTap' data-user_id="{{userInfo.openId}}">
+      <image src='/images/add.png' class='floating-button-icon'></image>
+    </view>
+    <view class='floating-button-search' bindtap='onSearchTap'>
+      <image src='/images/search.png' class='floating-button-icon'></image>
+    </view>
+  </view>
+</view>

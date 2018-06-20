@@ -1,0 +1,33 @@
+<view style="height: 50rpx"></view>
+
+<view class="input_instruction_wrapper">
+    <view class="input_instruction">该文章的标签</view>
+</view>
+
+<scroll-view class="current_tags_scroll" scroll-y="true" scroll-top="{{scrollH}}" scroll-with-animation>
+    <view class="tags_container" wx:if="{{tagList!=null && tagList.length!=0}}">
+        <view class="tag_container" wx:for="{{tagList}}">
+            <swiper class="tag_swiper" current='{{currentSwiper}}' bindchange=''>
+                <swiper-item style="width: 100%; height: 100%;">
+                    <view class="tag">{{item.name}}</view>
+                </swiper-item>
+                <swiper-item style="width: 100%; height: 100%;">
+                    <view class="delete" bindtap="onDeleteTag" data-index="{{index}}">删除</view>
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
+    <view class="empty_view" wx:if="{{tagList==null || tagList.length==0}}">还没有标签</view>
+</scroll-view>
+
+<view class="input_instruction_wrapper">
+    <view class="input_instruction">添加标签</view>
+</view>
+
+<view class="input_wrapper">
+    <input placeholder="输入并添加新标签..." value="{{inputTag}}" bindinput="onInputTag" bindconfirm="onConfirmTag"></input>
+</view>
+
+<view class="button_wrapper">
+    <view class="button" bindtap="onConfirm">完成</view>
+</view>
